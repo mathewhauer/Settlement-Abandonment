@@ -1,6 +1,7 @@
 ###------LIBRARY SETUP-----
 ## @knitr libraries
-rm(list = ls()) # Remove Previous Workspace
+
+# rm(list = ls()) # Remove Previous Workspace
 gc(reset = TRUE) # Garbage Collection
 
 
@@ -39,54 +40,50 @@ pkgs <- c(
   "openxlsx",      # Microsoft Excel Files
   "stringi",       #Character/String Editor
   "stringr",       # Character/String Editor
-  "zoo",           # Time Series
   "reshape2",      # Data Management/Manipulation
   "scales",        # Number formatting
   "cowplot",       # Plot Grids
   "tmap",          # Cartography
   "tmaptools",     # Cartographic tools
-  "tigris",        # US shapefiles
-  "censusapi",     # Census Data
-  "tidycensus",
   "sp",            # Spatial Objects
   "grid",          # Plot Grids
   "kableExtra",    # Pretty Tables
-  "LexisPlotR",    # Lexis Diagrams
   "pdftools",      # Load pdfs
   "R.utils",       # Utilities
-  "forecast",      # Forecasting
-  "pbmcapply",     # Progress Bar Multicore Apply
-  "parallelsugar", # Parallel apply
-  "rucm",          # UCM
   "IDPmisc",        # Quality na.rm
-  "tidycensus",     # Census Data
-  "CausalImpact",
-  "bsts",
-  "lubridate",
-  "tsoutliers",
-  "numform",
-  "statebins",
-  "flipTime",
-  "gridGraphics",
-  "lemon",
   "ggrepel",
-  "latex2exp",
-  "ggtext"
+  "raster",
+  "gridExtra",
+  "magick",
+  "pdftools",
+  "readxl",
+  "zoo",
+  "bsts",
+  "CausalImpact",
+  "kableExtra",
+  "philentropy",
+  "ggridges",
+  "janitor",
+  "gghighlight",
+  "inflection"
+  
 )
 
 # Install missing packages
 # Will only run if at least one package is missing
 
 if(!sum(!p_isinstalled(pkgs))==0){
-  p_install(
-    package = pkgs[!p_isinstalled(pkgs)], 
-    character.only = TRUE
-  )
+  install.packages( pkgs[!p_isinstalled(pkgs)])
 }
 
 # load the packages
 p_load(pkgs, character.only = TRUE)
 rm(pkgs)
+
+write.excel <- function(x,row.names=FALSE,col.names=TRUE,...) {
+  write.table(x,"clipboard",sep="\t",row.names=row.names,col.names=col.names,...)
+}
+
 
 ##Parallel Computing 
 # Establish Parallel Computing Cluster
@@ -96,6 +93,3 @@ registerDoParallel(clusters) # Register Cluster
 getDoParWorkers() # Determine Number of Utilized Clusters
 getDoParName() #  Name of the Currently Registered Parallel Computing Backend
 getDoParVersion() #  Version of the Currently Registered Parallel Computing Backend
-
-sigma <- 3.5
-set.seed(1)
